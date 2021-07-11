@@ -1,0 +1,70 @@
+<?php
+
+namespace Common\Billing\Gateways\Bitcoin;
+
+use Omnipay\Bitcoin\Message\AbstractRestRequest;
+
+/**
+ * Bitcoin REST Fetch Plan Request
+ *
+ * To get details about Bitcoin plans
+ *
+ * Example
+ *
+ * <code>
+ *   // Fetch Bitcoin Plan
+ *   $transaction = $this->gateway->fetchPlan([
+ *      'planId' => 'P-000000000000000000000000',
+ *   ]);
+ *   $response = $transaction->send();
+ *   $data = $response->getData();
+ *   echo "Gateway getPlan response data == " . print_r($data, true) . "\n";
+ * </code>
+ *
+ * @link https://developer.bitcoin.com/docs/api/payments.billing-plans/#billing-plans_get
+ */
+class BitcoinSearchInvoicesRequest extends AbstractRestRequest
+{
+    /**
+     *
+     * Get the plan ID
+     *
+     * @return string
+     */
+    public function getPlanId()
+    {
+        return $this->getParameter('planId');
+    }
+    /**
+     * Set the plan ID
+     *
+     * @param string $value
+     * @return BitcoinSearchInvoicesRequest
+     */
+    public function setPlanId($value)
+    {
+        return $this->setParameter('planId', $value);
+    }
+
+    public function getData()
+    {
+        $this->validate('planId');
+        return array();
+    }
+    /**
+     * Get HTTP Method.
+     *
+     * The HTTP method for list plans requests must be GET.
+     *
+     * @return string
+     */
+    protected function getHttpMethod()
+    {
+        return 'GET';
+    }
+    public function getEndpoint()
+    {
+        return parent::getEndpoint() . '/invoicing/invoices';
+    }
+}
+
